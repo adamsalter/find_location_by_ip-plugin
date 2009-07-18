@@ -10,6 +10,7 @@ Installation
 
 This plugin depends on two gems (config/environment.rb):
 
+    config.gem 'tzinfo'
     config.gem 'graticule'
     config.gem 'geonames'
 
@@ -31,6 +32,8 @@ In application_controller.rb:
 Notes
 -----
 
+1) Caching
+
 The request to find the timezone is making two background requests to "hostip.info" and "geonames.org" so it could be quite slow if you did this on every request.
 
 I personally cache the request for every IP address, and, using my [filestore_expires_in-plugin][fsei-plugin], set the expiry to 1 day. So for any IP address the request is only made at most once per day.
@@ -40,6 +43,20 @@ I personally cache the request for every IP address, and, using my [filestore_ex
     Time.zone = Rails.cache.fetch(cache_key, :expires_in => 1.day) do
       FindTimezone.by_ip(request.env['REMOTE_ADDR'])
     end
+
+2) TZInfo
+
+The Timezone handling in Rails is a little confusing. Rails ActiveSupport::TimeZone basically comes with basic support, in the way of an offset and reduced list of timezones, but means Rails doesn't handle daylight savings by default. Full support is passed to the TZInfo gem.
+
+... this also means things like the ActionView helper functions like `time_zone_select` don't support the Rails timezone naming if you use the TZInfo naming.
+
+The following does work, but lists all possible TZInfo::Timezones:
+
+    #Example
+    @user.time_zone = FindTimezone.by_ip(request.env['REMOTE_ADDR'])
+    
+    time_zone_select 'user', 'time_zone', nil, :model => TZInfo::Timezone
+
 
 Copyright (c) 2009 Adam @ [Codebright.net][cb], released under the MIT license
 
