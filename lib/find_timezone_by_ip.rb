@@ -16,11 +16,12 @@ class FindTimezone
     
     if loc.locality == "(Unknown city)"
       # if no city found
-      Geonames::WebService.timezone COUNTRY_LATLONG[loc.country][0], COUNTRY_LATLONG[loc.country][1]
+      tz = Geonames::WebService.timezone COUNTRY_LATLONG[loc.country][0], COUNTRY_LATLONG[loc.country][1]
     else
-      Geonames::WebService.timezone loc.latitude, loc.longitude
+      tz = Geonames::WebService.timezone loc.latitude, loc.longitude
     end
-      
+    
+    tz.timezone_id
   end
 
   # Average Latitude and Longitude for Countries
