@@ -8,6 +8,12 @@ Installation
 
     ./script/plugin install git://github.com/adamsalter/find_timezone_by_ip-plugin.git
 
+This plugin depends on two gems (config/envoronment.rb):
+
+    config.gem 'graticule'
+    config.gem 'geonames'
+
+
 Useage
 -----
 
