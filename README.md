@@ -8,11 +8,13 @@ Installation
 
     ./script/plugin install git://github.com/adamsalter/find_timezone_by_ip-plugin.git
 
-This plugin depends on two gems (config/environment.rb):
+This plugin depends on three gems (config/environment.rb):
 
     config.gem 'tzinfo'
     config.gem 'graticule'
     config.gem 'geonames'
+    
+Technically the tzinfo gem is not needed by this plugin, but Rails will get confused by the timezone returned without it. (e.g. 'Australia/Sydney')
 
 Useage
 -----
