@@ -1,6 +1,4 @@
 # FindTimezoneByIp-plugin
-require 'graticule'
-require 'geonames'
 
 class FindTimezone
 
