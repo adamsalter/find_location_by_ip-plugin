@@ -38,6 +38,7 @@ The request to find the timezone is making two background requests to "hostip.in
 
 I personally cache the request for every IP address, and, using my [filestore_expires_in-plugin][fsei-plugin], set the expiry to 1 day. So for any IP address the request is only made at most once per day.
 
+    ip = request.env['REMOTE_ADDR']
     cache_key = "controllers\application\select_timezone-%s" % [ip]
 
     Time.zone = Rails.cache.fetch(cache_key, :expires_in => 1.day) do
