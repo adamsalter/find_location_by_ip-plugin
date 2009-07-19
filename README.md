@@ -11,10 +11,16 @@ Installation
 This plugin depends on three gems (config/environment.rb):
 
     config.gem 'tzinfo'
-    config.gem 'graticule'
+    config.gem 'geoip'
     config.gem 'geonames'
     
 Technically the tzinfo gem is not needed by this plugin, but Rails will get confused by the timezone returned without it. (e.g. 'Australia/Sydney')
+
+You will need to run the rake task to download/update the geoip db at least once:
+
+    rake geoip:update_db
+
+by default the database file is placed in `public/system`, which is also a system dir created by capistrano deploys. (Don't forget to add `public/system` to your .gitignore file so that you don't add the geoip db to your repo)
 
 Useage
 -----
@@ -36,7 +42,7 @@ Notes
 
 1) Caching
 
-The request to find the timezone is making two background requests to "hostip.info" and "geonames.org" so it could be quite slow if you did this on every request.
+The request to find the timezone is making a background request to "geonames.org" so it could be quite slow if you did this on every request.
 
 I personally cache the request for every IP address, and, using my [filestore_expires_in-plugin][fsei-plugin], set the expiry to 1 day. So for any IP address the request is only made at most once per day.
 
@@ -60,6 +66,10 @@ The following does work, but lists all possible TZInfo::Timezones:
     
     time_zone_select 'user', 'time_zone', nil, :model => TZInfo::Timezone
 
+
+3) MaxMind GeoIP database
+
+  Thanks to Maxmind for a great geoip db. [http://www.maxmind.com](http://www.maxmind.com)
 
 Copyright (c) 2009 Adam @ [Codebright.net][cb], released under the MIT license
 
