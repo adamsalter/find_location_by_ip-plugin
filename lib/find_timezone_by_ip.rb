@@ -1,15 +1,13 @@
 # FindTimezoneByIp-plugin
 
 class FindTimezone
-  
+  cattr_accessor :system_dir
+  @@system_dir = File.join(RAILS_ROOT, 'public/system')
+
   class << self
-    attr_accessor :geoip_file
-    
-    def initialize
-      self.geoip_file = File.join(RAILS_ROOT, 'public/system/GeoLiteCity.dat')
-    end
-    
+
     def by_ip(ip)
+      geoip_file = File.join(@@system_dir, 'GeoLiteCity.dat')
       loc = GeoIP.new(geoip_file).city(ip)
       begin
         tz = Geonames::WebService.timezone loc[9], loc[10]

@@ -69,6 +69,10 @@ The following does work, but lists all possible TZInfo::Timezones:
 
 3) MaxMind GeoIP database
 
+  You can change the position of the maxmind db by creating an initializer in `config/initializers`
+  
+    FindTimezone.system_dir = #{RAILS_ROOT} + '/my_custom_dir'
+
   Thanks to Maxmind for a great geoip db. [http://www.maxmind.com](http://www.maxmind.com)
 
 Copyright (c) 2009 Adam @ [Codebright.net][cb], released under the MIT license
