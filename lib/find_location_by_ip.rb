@@ -13,12 +13,12 @@ class FindLocationByIp
     if @loc[:geoip][7] == ""
       # try hostip if maxmind not found
       @loc[:hostip] = query_hostip(ip)
-      @country_code = @loc[:hostip]['country_abbrev']
-      @country = @loc[:hostip]['country_name'].titleize
+      @country_code = @loc[:hostip]['countryAbbrev']
+      @country = @loc[:hostip]['countryName'].titleize
       @city = @loc[:hostip]['name']
-      if @loc[:hostip]['ip_location'].present?
+      if @loc[:hostip]['ipLocation'].present?
         # if ip location found
-        @latitude, @longtitude = @loc[:hostip]['ip_location']['point_property']['point']['coordinates'].split(',').reverse.map(&:to_f)
+        @latitude, @longtitude = @loc[:hostip]['ipLocation']['PointProperty']['Point']['coordinates'].split(',').reverse.map(&:to_f)
       end
     else
       @country_code = @loc[:geoip][2]
@@ -38,7 +38,7 @@ class FindLocationByIp
     def query_hostip(ip)
       require 'open-uri'
       query = open('http://api.hostip.info/?position=true&ip='+ip)
-      Hash.from_xml(query)['hostip_lookup_result_set']['feature_member']['hostip']
+      raise StandardError, Hash.from_xml(query)['HostipLookupResultSet']['featureMember']['Hostip'].inspect
     end
 
 end
