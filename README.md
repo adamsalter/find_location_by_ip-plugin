@@ -57,7 +57,7 @@ I personally cache the request for every IP address, and, using my [filestore_ex
     cache_key = "controllers/application/select_timezone-%s" % [ip]
 
     @location = Rails.cache.fetch(cache_key, :expires_in => 1.day) do
-      FindLocationByIp.new(request.env['REMOTE_ADDR'])
+      FindLocationByIp.new(ip)
     end
     Time.zone = @location.timezone
 
