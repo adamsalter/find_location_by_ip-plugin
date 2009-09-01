@@ -1,3 +1,8 @@
+require 'pp'
 require 'rubygems'
-require 'active_support'
-require 'active_support/test_case'
+require 'test/unit'
+require 'active_support/testing/declarative'
+
+RAILS_ROOT = File.join(File.dirname(__FILE__), '..', '..', '..', '..')
+
+require 'find_location_by_ip'
