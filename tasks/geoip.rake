@@ -4,6 +4,7 @@
 # end
 
 namespace :geoip do
+  desc "Download the latest geoip db"
   task :update_db => :environment do
     system_dir = FindTimezone.system_dir
     # only download if file changed
